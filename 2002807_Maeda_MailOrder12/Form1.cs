@@ -7,12 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using _2002807_Maeda_MailOrder12;
 
 namespace _2002807_Maeda_MailOrder12
 {
     public partial class Form1 : Form
     {
 
+        List<customerInfo> customers { get; set; } = new List<customerInfo>();
+
+        
         //imports variables
         private int quantity;
         private double price,
@@ -33,18 +37,9 @@ namespace _2002807_Maeda_MailOrder12
             salesTaxOutput.ReadOnly = true;
             amountDueOutput.ReadOnly = true;
             handlingOutput.ReadOnly = true;
-            
         }
 
 
-        private void updateSummaryToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //pushes values to UI
-            totalAmountOutput.Text = totalCharge.ToString("C");
-            salesTaxOutput.Text = salesTax.ToString("C");
-            amountDueOutput.Text = totalSales.ToString("C");
-            handlingOutput.Text = handling.ToString("C");
-        }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -52,68 +47,54 @@ namespace _2002807_Maeda_MailOrder12
             this.Close();
         }
 
+        private void Orders_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            customerInfo cusInfo = customers[Customers.SelectedIndex];
+
+            customerInformation ciDlg = new customerInformation();
+            ciDlg.SelectedCustomer = cusInfo;
+            ciDlg.ShowDialog();
+        }
+
         private void addThisItemToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
+            String name = nameInput.Text;
+            String address = addressInput.Text;
+            String city = cityInput.Text;
+            String state = stateInput.Text;
+            String zipCode = zipInput.Text;
+            String quantity = quantityInput.Text;
+            String weight = weightInput.Text;
+            String price = priceInput.Text;
+
+            customerInfo cusInfo = new customerInfo(name, address, city, state, zipCode);
+
+            customers.Add(cusInfo);
+
+            Customers.Items.Add(cusInfo.name);
+
+            //Create order item
+            orderItems orderItems = new orderItems(quantity, weight, price, state);
+
+            //Validate order inputs
+            if (orderItems.validateInputs() == true)
             {
-                q = quantityInput.Text;
-                bool quantityResult = int.TryParse(q, out quantity);
-                if(quantityResult == true)
-                {
-                    w = weightInput.Text;
-                    bool weightResult = double.TryParse(w, out weight);
-                    if(weightResult == true)
-                    {
-                        p = priceInput.Text;
-                        bool priceResult = double.TryParse(p, out price);
-                        if(priceResult == true)
-                        {
-                            weight = quantity * int.Parse(weightInput.Text);
-                            //calculates the handling charge
-                            if (weight < 10)
-                            {
-                                handling = 1.00;
-                            }
-                            else if(weight > 10 || weight  < 100)
-                            {
-                                handling = 3.00;
-                            }
-                            else if(weight > 100)
-                            {
-                                handling = 5.00;
-                            }
-                            //checks if order is in California
-                            if (stateInput.Text == "CA" || stateInput.Text == "ca" || stateInput.Text == "Ca" || stateInput.Text == "cA")
-                            {
-                                salesTax = 0.08 * (price * quantity);
-                            }
-                            else
-                            {
-                                salesTax = 0;
-                            }
-                            //calculates stuff
-                            totalSales += price * quantity;
-                            totalCharge += (price * quantity) + handling + salesTax;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Please enter a valid input", "Error");
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Please enter a valid input", "Error");
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Please enter a valid input", "Error");
-                }
+                //Call order item calcuation
+                orderItems.calculate();
+
+                customerInfo ciDlg = new customerInfo(name, address, city, state, zipCode);
+                totalAmountOutput.Text = orderItems.totalCharge.ToString("C");
+                salesTaxOutput.Text = orderItems.salesTax.ToString("C");
+                handlingOutput.Text = orderItems.handling.ToString("C");
+                amountDueOutput.Text = orderItems.totalSales.ToString("C");
+
+
             }
-            catch
+            else
             {
                 MessageBox.Show("Please enter a valid input", "Error");
             }
+            
         }
 
         private void clearToolStripMenuItem_Click(object sender, EventArgs e)
@@ -156,7 +137,8 @@ namespace _2002807_Maeda_MailOrder12
         //message box to display program name and programmer
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Program Name - Mail Order 12\n Programmer - Ransom Maeda");
+            info box = new info();
+            box.ShowDialog();
         }
     }
 }

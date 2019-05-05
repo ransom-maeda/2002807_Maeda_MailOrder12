@@ -50,16 +50,16 @@
             this.cityInput = new System.Windows.Forms.TextBox();
             this.stateInput = new System.Windows.Forms.MaskedTextBox();
             this.zipInput = new System.Windows.Forms.MaskedTextBox();
-            this.customerInfo = new System.Windows.Forms.GroupBox();
+            this.boxCustomerInfo = new System.Windows.Forms.GroupBox();
             this.orderInfo = new System.Windows.Forms.GroupBox();
+            this.labelPrice = new System.Windows.Forms.Label();
+            this.priceInput = new System.Windows.Forms.TextBox();
             this.labelDescription = new System.Windows.Forms.Label();
             this.labelQuantity = new System.Windows.Forms.Label();
             this.labelWeight = new System.Windows.Forms.Label();
             this.weightInput = new System.Windows.Forms.TextBox();
             this.quantityInput = new System.Windows.Forms.TextBox();
             this.descriptionInput = new System.Windows.Forms.TextBox();
-            this.labelPrice = new System.Windows.Forms.Label();
-            this.priceInput = new System.Windows.Forms.TextBox();
             this.fontChange = new System.Windows.Forms.FontDialog();
             this.colorChange = new System.Windows.Forms.ColorDialog();
             this.boxSummary = new System.Windows.Forms.GroupBox();
@@ -71,8 +71,9 @@
             this.labelHandling = new System.Windows.Forms.Label();
             this.labelSalesTax = new System.Windows.Forms.Label();
             this.labelDollarAmount = new System.Windows.Forms.Label();
+            this.Customers = new System.Windows.Forms.ListBox();
             this.menu.SuspendLayout();
-            this.customerInfo.SuspendLayout();
+            this.boxCustomerInfo.SuspendLayout();
             this.orderInfo.SuspendLayout();
             this.boxSummary.SuspendLayout();
             this.SuspendLayout();
@@ -103,7 +104,6 @@
             this.updateSummaryToolStripMenuItem.Name = "updateSummaryToolStripMenuItem";
             this.updateSummaryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.updateSummaryToolStripMenuItem.Text = "Update &Summary";
-            this.updateSummaryToolStripMenuItem.Click += new System.EventHandler(this.updateSummaryToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
@@ -254,24 +254,24 @@
             this.zipInput.Size = new System.Drawing.Size(100, 20);
             this.zipInput.TabIndex = 10;
             // 
-            // customerInfo
+            // boxCustomerInfo
             // 
-            this.customerInfo.Controls.Add(this.labelName);
-            this.customerInfo.Controls.Add(this.zipInput);
-            this.customerInfo.Controls.Add(this.labelAddress);
-            this.customerInfo.Controls.Add(this.stateInput);
-            this.customerInfo.Controls.Add(this.labelCity);
-            this.customerInfo.Controls.Add(this.cityInput);
-            this.customerInfo.Controls.Add(this.labelState);
-            this.customerInfo.Controls.Add(this.addressInput);
-            this.customerInfo.Controls.Add(this.labelZIP);
-            this.customerInfo.Controls.Add(this.nameInput);
-            this.customerInfo.Location = new System.Drawing.Point(12, 37);
-            this.customerInfo.Name = "customerInfo";
-            this.customerInfo.Size = new System.Drawing.Size(206, 190);
-            this.customerInfo.TabIndex = 11;
-            this.customerInfo.TabStop = false;
-            this.customerInfo.Text = "Customer Information";
+            this.boxCustomerInfo.Controls.Add(this.labelName);
+            this.boxCustomerInfo.Controls.Add(this.zipInput);
+            this.boxCustomerInfo.Controls.Add(this.labelAddress);
+            this.boxCustomerInfo.Controls.Add(this.stateInput);
+            this.boxCustomerInfo.Controls.Add(this.labelCity);
+            this.boxCustomerInfo.Controls.Add(this.cityInput);
+            this.boxCustomerInfo.Controls.Add(this.labelState);
+            this.boxCustomerInfo.Controls.Add(this.addressInput);
+            this.boxCustomerInfo.Controls.Add(this.labelZIP);
+            this.boxCustomerInfo.Controls.Add(this.nameInput);
+            this.boxCustomerInfo.Location = new System.Drawing.Point(12, 37);
+            this.boxCustomerInfo.Name = "boxCustomerInfo";
+            this.boxCustomerInfo.Size = new System.Drawing.Size(206, 190);
+            this.boxCustomerInfo.TabIndex = 11;
+            this.boxCustomerInfo.TabStop = false;
+            this.boxCustomerInfo.Text = "Customer Information";
             // 
             // orderInfo
             // 
@@ -289,6 +289,22 @@
             this.orderInfo.TabIndex = 12;
             this.orderInfo.TabStop = false;
             this.orderInfo.Text = "Order Information";
+            // 
+            // labelPrice
+            // 
+            this.labelPrice.AutoSize = true;
+            this.labelPrice.Location = new System.Drawing.Point(6, 128);
+            this.labelPrice.Name = "labelPrice";
+            this.labelPrice.Size = new System.Drawing.Size(31, 13);
+            this.labelPrice.TabIndex = 15;
+            this.labelPrice.Text = "Price";
+            // 
+            // priceInput
+            // 
+            this.priceInput.Location = new System.Drawing.Point(132, 125);
+            this.priceInput.Name = "priceInput";
+            this.priceInput.Size = new System.Drawing.Size(100, 20);
+            this.priceInput.TabIndex = 16;
             // 
             // labelDescription
             // 
@@ -337,22 +353,6 @@
             this.descriptionInput.Name = "descriptionInput";
             this.descriptionInput.Size = new System.Drawing.Size(100, 20);
             this.descriptionInput.TabIndex = 12;
-            // 
-            // labelPrice
-            // 
-            this.labelPrice.AutoSize = true;
-            this.labelPrice.Location = new System.Drawing.Point(6, 128);
-            this.labelPrice.Name = "labelPrice";
-            this.labelPrice.Size = new System.Drawing.Size(31, 13);
-            this.labelPrice.TabIndex = 15;
-            this.labelPrice.Text = "Price";
-            // 
-            // priceInput
-            // 
-            this.priceInput.Location = new System.Drawing.Point(132, 125);
-            this.priceInput.Name = "priceInput";
-            this.priceInput.Size = new System.Drawing.Size(100, 20);
-            this.priceInput.TabIndex = 16;
             // 
             // boxSummary
             // 
@@ -435,22 +435,32 @@
             this.labelDollarAmount.TabIndex = 0;
             this.labelDollarAmount.Text = "Dollar Amount Due";
             // 
+            // Customers
+            // 
+            this.Customers.FormattingEnabled = true;
+            this.Customers.Location = new System.Drawing.Point(242, 202);
+            this.Customers.Name = "Customers";
+            this.Customers.Size = new System.Drawing.Size(138, 212);
+            this.Customers.TabIndex = 14;
+            this.Customers.SelectedIndexChanged += new System.EventHandler(this.Orders_SelectedIndexChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(548, 473);
+            this.Controls.Add(this.Customers);
             this.Controls.Add(this.boxSummary);
             this.Controls.Add(this.orderInfo);
-            this.Controls.Add(this.customerInfo);
+            this.Controls.Add(this.boxCustomerInfo);
             this.Controls.Add(this.menu);
             this.MainMenuStrip = this.menu;
             this.Name = "Form1";
-            this.Text = "Mail Order 12";
+            this.Text = " Mail Order 12";
             this.menu.ResumeLayout(false);
             this.menu.PerformLayout();
-            this.customerInfo.ResumeLayout(false);
-            this.customerInfo.PerformLayout();
+            this.boxCustomerInfo.ResumeLayout(false);
+            this.boxCustomerInfo.PerformLayout();
             this.orderInfo.ResumeLayout(false);
             this.orderInfo.PerformLayout();
             this.boxSummary.ResumeLayout(false);
@@ -484,7 +494,7 @@
         private System.Windows.Forms.TextBox cityInput;
         private System.Windows.Forms.MaskedTextBox stateInput;
         private System.Windows.Forms.MaskedTextBox zipInput;
-        private System.Windows.Forms.GroupBox customerInfo;
+        private System.Windows.Forms.GroupBox boxCustomerInfo;
         private System.Windows.Forms.GroupBox orderInfo;
         private System.Windows.Forms.Label labelPrice;
         private System.Windows.Forms.TextBox priceInput;
@@ -505,6 +515,7 @@
         private System.Windows.Forms.Label labelHandling;
         private System.Windows.Forms.Label labelSalesTax;
         private System.Windows.Forms.Label labelDollarAmount;
+        private System.Windows.Forms.ListBox Customers;
     }
 }
 
