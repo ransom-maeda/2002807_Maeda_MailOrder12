@@ -13,6 +13,7 @@ namespace _2002807_Maeda_MailOrder12
     public partial class Form1 : Form
     {
 
+        //imports variables
         private int quantity;
         private double price,
             weight,
@@ -27,6 +28,7 @@ namespace _2002807_Maeda_MailOrder12
         public Form1()
         {
             InitializeComponent();
+            //sets summary textboxes to readonly
             totalAmountOutput.ReadOnly = true;
             salesTaxOutput.ReadOnly = true;
             amountDueOutput.ReadOnly = true;
@@ -37,6 +39,7 @@ namespace _2002807_Maeda_MailOrder12
 
         private void updateSummaryToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //pushes values to UI
             totalAmountOutput.Text = totalCharge.ToString("C");
             salesTaxOutput.Text = salesTax.ToString("C");
             amountDueOutput.Text = totalSales.ToString("C");
@@ -45,6 +48,7 @@ namespace _2002807_Maeda_MailOrder12
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //closes form
             this.Close();
         }
 
@@ -65,7 +69,8 @@ namespace _2002807_Maeda_MailOrder12
                         if(priceResult == true)
                         {
                             weight = quantity * int.Parse(weightInput.Text);
-                            if(weight < 10)
+                            //calculates the handling charge
+                            if (weight < 10)
                             {
                                 handling = 1.00;
                             }
@@ -77,7 +82,8 @@ namespace _2002807_Maeda_MailOrder12
                             {
                                 handling = 5.00;
                             }
-                            if(stateInput.Text == "CA" || stateInput.Text == "ca" || stateInput.Text == "Ca" || stateInput.Text == "cA")
+                            //checks if order is in California
+                            if (stateInput.Text == "CA" || stateInput.Text == "ca" || stateInput.Text == "Ca" || stateInput.Text == "cA")
                             {
                                 salesTax = 0.08 * (price * quantity);
                             }
@@ -85,6 +91,7 @@ namespace _2002807_Maeda_MailOrder12
                             {
                                 salesTax = 0;
                             }
+                            //calculates stuff
                             totalSales += price * quantity;
                             totalCharge += (price * quantity) + handling + salesTax;
                         }
@@ -111,6 +118,7 @@ namespace _2002807_Maeda_MailOrder12
 
         private void clearToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //clears all values
             totalAmountOutput.Clear();
             salesTaxOutput.Clear();
             amountDueOutput.Clear();
@@ -122,6 +130,7 @@ namespace _2002807_Maeda_MailOrder12
             totalSales = 0;
         }
 
+        //selects font and color
         private void fontToolStripMenuItem_Click(object sender, EventArgs e)
         {
             selectFont();
@@ -144,6 +153,7 @@ namespace _2002807_Maeda_MailOrder12
             colorChange.ShowDialog();
         }
 
+        //message box to display program name and programmer
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Program Name - Mail Order 12\n Programmer - Ransom Maeda");
